@@ -1,0 +1,166 @@
+AllExpense_Screen As screen:
+
+    Lbl_Header_AllExpense As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(0, 46, 92, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =92
+        Size: =21
+        Text: ="All Expense Reports"
+        Width: =640
+        ZIndex: =1
+
+    "Gallery1 As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+        DelayItemLoading: =true
+        Height: =886
+        Items: |-
+            =If(IsBlank(Txt_FilterByEvent_AllExpense), 
+            Filter('Expense Reports', Not('Report Status' in ['Report Status Choices'.Draft])),
+            Filter('Expense Reports', Not('Report Status' in ['Report Status Choices'.Draft]) && Txt_FilterByEvent_AllExpense.Text in Event))
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplatePadding: =0
+        TemplateSize: =257
+        Y: =249
+        ZIndex: =1
+
+        Lbl_ExpenseTitle_AllExpense As label:
+            Color: =RGBA(0, 46, 92, 1)
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =38
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =16
+            Text: =ThisItem.Event
+            Underline: =true
+            VerticalAlign: =VerticalAlign.Top
+            Width: =318
+            X: =18
+            Y: =30
+            ZIndex: =1
+
+        NextArrow2 As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            Color: =RGBA(166, 166, 166, 1)
+            Height: =50
+            Icon: =Icon.ChevronRight
+            OnSelect: =Set(VarExpenseMode, "Edit"); Set(VarExpense, ThisItem); Navigate(ExpenseDetail_Screen)
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Tooltip: ="View item details"
+            Width: =50
+            X: =Parent.TemplateWidth - Self.Width - 12
+            Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+            ZIndex: =3
+
+        Separator2 As rectangle:
+            Height: =8
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - Self.Height
+            ZIndex: =4
+
+        Rectangle2 As rectangle:
+            Height: =Parent.TemplateHeight - Separator2.Height
+            OnSelect: =Select(Parent)
+            Visible: =ThisItem.IsSelected
+            Width: =4
+            ZIndex: =5
+
+        Lbl_StartEndDates_AllExpense As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =33
+            OnSelect: =Select(Parent)
+            Size: =14
+            Text: |-
+                ="Start: " & Text(ThisItem.'Start Date', DateTimeFormat.ShortDate) & " - End: " & Text(ThisItem.'End Date', DateTimeFormat.ShortDate)
+            Width: =318
+            X: =18
+            Y: =105
+            ZIndex: =6
+
+        Lbl_Employee_AllExpense As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =37
+            OnSelect: =Select(Parent)
+            Size: =14
+            Text: =ThisItem.Employee.'Full Name'
+            Width: =243
+            X: =18
+            Y: =68
+            ZIndex: =7
+
+        Lbl_ReportStatus_AllExpense As label:
+            Height: =41
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Status : " & First(ThisItem.'Report Status').Value
+            Width: =315
+            X: =21
+            Y: =138
+            ZIndex: =8
+
+        Lbl_TotalAmount_AllExpense As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =38
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Total Amount: " & Text(ThisItem.Total, "$#,###.00")
+            Width: =315
+            X: =21
+            Y: =179
+            ZIndex: =9
+
+    Btn_ReturnHome_AllExpense As button:
+        Fill: =RGBA(0, 4, 92, 1)
+        Height: =32
+        HoverFill: =RGBA(0, 46, 92, 1)
+        OnSelect: =Navigate(Welcome_Screen)
+        Size: =14
+        Text: ="Home"
+        Width: =113
+        X: =515
+        Y: =119
+        ZIndex: =2
+
+    Icn_Back_AllExpense As icon.BackArrow:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =50
+        Icon: =Icon.BackArrow
+        OnSelect: =Back()
+        X: =21
+        Y: =21
+        ZIndex: =3
+
+    Lbl_Event_AllExpenses As label:
+        BorderColor: =RGBA(0, 69, 120, 1)
+        Color: =RGBA(0, 46, 92, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        PaddingTop: =20
+        Size: =21
+        Text: ="All Expense Events"
+        VerticalAlign: =VerticalAlign.Top
+        Width: =307
+        X: =40
+        Y: =119
+        ZIndex: =4
+
+    Txt_FilterByEvent_AllExpense As text:
+        Default: =
+        Height: =41
+        HintText: ="Filter by Event Name"
+        Size: =16
+        Width: =560
+        X: =40
+        Y: =189
+        ZIndex: =5
+

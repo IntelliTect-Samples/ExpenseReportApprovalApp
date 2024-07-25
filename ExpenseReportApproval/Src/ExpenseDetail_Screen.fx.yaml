@@ -1,0 +1,399 @@
+ExpenseDetail_Screen As screen:
+
+    Lbl_Header_ExpenseDetail As label:
+        Align: =Align.Center
+        Color: =RGBA(255, 255, 255, 1)
+        Fill: =RGBA(0, 46, 92, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =92
+        PaddingLeft: =64
+        PaddingRight: =64
+        Size: =20
+        Text: |-
+            ="Expense Report: " & VarExpense.Event
+        Width: =640
+        ZIndex: =1
+
+    "Gallery2 As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+        BorderColor: =RGBA(0, 46, 92, 1)
+        BorderThickness: =1
+        DelayItemLoading: =true
+        Fill: =RGBA(0, 46, 92, 0)
+        Height: =567
+        Items: =Filter('Expense Report Details', VarExpense.Event = 'Associated Event')
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        TemplatePadding: =0
+        TemplateSize: =434
+        Y: =320
+        ZIndex: =1
+
+        Lbl_ExpenseTitle_ExpenseDetail As label:
+            Color: =RGBA(0, 46, 92, 1)
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =26
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: |-
+                ="Expense:           " & ThisItem.Expense
+            VerticalAlign: =VerticalAlign.Top
+            Width: =332
+            X: =17
+            Y: =25
+            ZIndex: =1
+
+        Separator3 As rectangle:
+            Fill: =RGBA(0, 46,92,1)
+            Height: =8
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - Self.Height
+            ZIndex: =4
+
+        Rectangle3 As rectangle:
+            Height: =Parent.TemplateHeight - Separator3.Height
+            OnSelect: =Select(Parent)
+            Visible: =ThisItem.IsSelected
+            Width: =4
+            ZIndex: =5
+
+        Lbl_ExpenseAmount_ExpenseDetail As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =26
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Amount:                 " & Text(ThisItem.Amount, "$#,###.00")
+            Width: =295
+            X: =17
+            Y: =107
+            ZIndex: =6
+
+        Lbl_TransactionDate_ExpenseDetail As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =26
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |
+                ="Transition Date:    " & Text(ThisItem.'Transaction Date', DateTimeFormat.ShortDate)
+            Width: =295
+            X: =17
+            Y: =137
+            ZIndex: =7
+
+        Img_Receipt_ExpenseDetail As image:
+            Height: =225
+            Image: =ThisItem.Receipt
+            OnSelect: =Select(Parent)
+            Width: =320
+            X: =311
+            Y: =13
+            ZIndex: =8
+
+        Btn_SeeReceipt_ExpenseDetail As button:
+            Height: =27
+            OnSelect: |-
+                =If(IsBlank(ThisItem.Receipt),false,
+                Download("https://org712d83f0.crm.dynamics.com/Image/download.aspx?Entity=cr084_expensereportdetail&Attribute=cr084_receipt&Id="&ThisItem.'Expense Report Detail'&"&Full=true")
+                )
+            Size: =16
+            Text: =If(IsBlank(ThisItem.Receipt),"","Open Receipt")
+            Visible: =!IsBlank(ThisItem.Receipt)
+            Width: =217
+            X: =362
+            Y: =263
+            ZIndex: =9
+
+        Lbl_Vendor_ExpenseDetail As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =23
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Vendor:                  " & ThisItem.Vendor
+            Width: =295
+            X: =17
+            Y: =166
+            ZIndex: =10
+
+        Lbl_Billable_ExpenseDetail As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =23
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Expense Type:       " & ThisItem.Billiable
+            Width: =292
+            X: =17
+            Y: =197
+            ZIndex: =11
+
+        Lbl_Description_ExpenseDetail As label:
+            BorderColor: =RGBA(0,46,92,1)
+            BorderThickness: =1
+            Color: =RGBA(0, 46, 92, 1)
+            Fill: =RGBA(255,255,255,1)
+            FocusedBorderColor: =RGBA(0, 46, 92, 0)
+            FocusedBorderThickness: =1
+            Height: =109
+            OnSelect: =Select(Parent)
+            Overflow: =Overflow.Scroll
+            Size: =12
+            Text: |-
+                ="Decription: " & ThisItem.'Expense Description'
+            Width: =295
+            X: =16
+            Y: =263
+            ZIndex: =12
+
+        Label1 As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =21
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Project:                   " & ThisItem.Project
+            Width: =295
+            X: =16
+            Y: =230
+            ZIndex: =13
+
+        Label3 As label:
+            Color: =RGBA(0, 46, 92, 1)
+            Height: =42
+            OnSelect: =Select(Parent)
+            Size: =12
+            Text: |-
+                ="Category:               " & ThisItem.Category
+            Width: =346
+            X: =16
+            Y: =64
+            ZIndex: =14
+
+    Icn_Back_ExpenseDetail As icon.BackArrow:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =50
+        Icon: =Icon.BackArrow
+        OnSelect: =Back()
+        X: =13
+        Y: =21
+        ZIndex: =2
+
+    Btn_ReturnHome_ExpenseDetail As button:
+        Fill: =RGBA(0, 4, 92, 1)
+        Height: =32
+        HoverFill: =RGBA(0, 46, 92, 1)
+        OnSelect: =Navigate(Welcome_Screen)
+        Size: =14
+        Text: ="Home"
+        Width: =113
+        X: =515
+        Y: =119
+        ZIndex: =3
+
+    Lbl_EventTitle_ExpenseDetail As label:
+        Color: =RGBA(0, 46, 92, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =70
+        Size: =21
+        Text: |
+            =If(
+                CountRows(Distinct(Filter('Expense Report Details', 'Associated Event' = VarExpense.Event), Project)) = 1,
+                If(
+                    IsBlank(First(Distinct(Filter('Expense Report Details', 'Associated Event' = VarExpense.Event), Project)).Value),
+                    "",
+                    "Expense for " &  First(Distinct(Filter('Expense Report Details', 'Associated Event' = VarExpense.Event), Project)).Value
+                ),
+                ""
+            )
+        Width: =473
+        X: =13
+        Y: =117
+        ZIndex: =4
+
+    Lbl_StartEndDates_ExpenseDetail As label:
+        Color: =RGBA(0, 46, 92, 1)
+        Height: =56
+        Size: =16
+        Text: |-
+            ="Dates: " & Text(VarExpense.'Start Date', DateTimeFormat.ShortDate) & " - " & Text(VarExpense.'End Date', DateTimeFormat.ShortDate)
+        Width: =561
+        X: =13
+        Y: =172
+        ZIndex: =5
+
+    Lbl_EmployeeSubmitter_ExpenseDetail As label:
+        Color: =RGBA(0, 46, 92, 1)
+        Height: =56
+        Size: =16
+        Text: |-
+            ="Submitter : " & VarExpense.Employee.'Full Name'
+        Width: =561
+        X: =13
+        Y: =214
+        ZIndex: =6
+
+    Lbl_Expenses_ExpenseDetail As label:
+        Color: =RGBA(0, 46, 92, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =56
+        Size: =16
+        Text: |-
+            ="Expense Items:"
+        Underline: =true
+        Width: =561
+        X: =13
+        Y: =270
+        ZIndex: =7
+
+    Lbl_Total_ExpenseDetail As label:
+        Align: =Align.Right
+        BorderColor: =RGBA(0, 69, 120, 1)
+        Color: =RGBA(0, 46, 92, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        PaddingTop: =20
+        Size: =21
+        Text: |-
+            ="Total: " & Text(Value(VarExpense.Total), "$#,###.00")
+        VerticalAlign: =VerticalAlign.Top
+        Width: =303
+        X: =325
+        Y: =960
+        ZIndex: =8
+
+    Txt_Notes_ExpenseDetail As text:
+        Default: =
+        Height: =98
+        HintText: ="Enter Any comments to Submitter"
+        Mode: =TextMode.MultiLine
+        Size: =12
+        Width: =409
+        X: =13
+        Y: =932
+        ZIndex: =9
+
+    Lbl_Notes_ExpenseDetail As label:
+        Color: =RGBA(0, 46, 92, 1)
+        Height: =31
+        Size: =21
+        Text: |-
+            ="Notes: "
+        Width: =184
+        X: =13
+        Y: =894
+        ZIndex: =10
+
+    Btn_Denied_ExpenseDetail As button:
+        Fill: =RGBA(0, 46, 92, 1)
+        Height: =70
+        OnSelect: |
+            =Set( VarApproval,
+                Patch(
+                'Expense Reports',
+                VarExpense,
+                {
+                    Notes: Txt_Notes_ExpenseDetail.Text,
+                    'Report Status':['Report Status Choices'.Denied]
+                })
+            );
+            
+            Set(varSubmittersEmail, LookUp(Users, 'Full Name' = VarExpense.Employee.'Full Name', 'Primary Email'));
+            
+            Office365Outlook.SendEmailV2(
+                varSubmittersEmail,
+                "Expense Report: " & VarExpense.Event & " Declined",
+                "The Expense Report " & VarExpense.Event & " has been DECLINED for the amount of $" & VarExpense.Total & ". <br>Notes: " & Txt_Notes_ExpenseDetail.Text & "<br>You may view your Expense Report here: <br>https://apps.powerapps.com/play/e/361aad71-db61-e309-93d8-58cfe5bfe512/a/7d58fe06-cf1b-450a-b092-57eb3a85d3d0?tenantId=37321907-14a5-4390-987d-ec0c66c655cd&sourcetime=1721074819900"
+            );
+            
+            Navigate(AllExpense_Screen);
+        RadiusBottomLeft: =50
+        RadiusBottomRight: =50
+        RadiusTopLeft: =50
+        RadiusTopRight: =50
+        Size: =24
+        Text: ="Decline"
+        Width: =256
+        X: =13
+        Y: =1052
+        ZIndex: =11
+
+    Btn_Approve_ExpenseDetail As button:
+        Fill: =RGBA(0, 46, 92, 1)
+        Height: =70
+        OnSelect: |
+            =Set( VarApproval,
+                Patch(
+                'Expense Reports',
+                VarExpense,
+                {
+                    Notes: Txt_Notes_ExpenseDetail.Text,
+                    'Report Status':['Report Status Choices'.Approved]
+                })
+            );
+            
+            Set(varSubmittersEmail, LookUp(Users, 'Full Name' = VarExpense.Employee.'Full Name', 'Primary Email'));
+            
+            Office365Outlook.SendEmailV2(
+                varSubmittersEmail,
+                "Expense Report: " & VarExpense.Event & " Approved",
+                "The Expense Report " & VarExpense.Event & " has been APPROVED for the amount of $" & VarExpense.Total & ". <br>Notes: " & Txt_Notes_ExpenseDetail.Text & "<br>You may view your Expense Report here: <br>https://apps.powerapps.com/play/e/361aad71-db61-e309-93d8-58cfe5bfe512/a/7d58fe06-cf1b-450a-b092-57eb3a85d3d0?tenantId=37321907-14a5-4390-987d-ec0c66c655cd&sourcetime=1721074819900"
+            );
+            
+            ClearCollect(
+                colRecipientsaccounting,
+                {Email: "colton.cronquist@intellitect.com"} // Change this to Kim
+            );
+            
+            Set(varRecipientsAccounting, Concat(colRecipientsaccounting, Email & ";"));
+            
+            Set(varApprovalType, LookUp(
+                'Expense Reports',
+                Event = VarExpense.Event
+            ).'Approval Type');
+            
+            Office365Outlook.SendEmailV2(
+                varRecipientsAccounting,
+                "Expense Report: " & VarExpense.Event & " Approved for " & VarExpense.Employee.'Full Name',
+                "The Expense Report " & VarExpense.Event & " has been approved.<br>" &
+                "Expense Event: " &  VarExpense.Event & "<br>" & 
+                "Event Dates: " & Text(VarExpense.'Start Date', DateTimeFormat.ShortDate) & " - " & Text(VarExpense.'End Date', DateTimeFormat.ShortDate) &"<br>" & 
+                "Approval Type: " & varApprovalType & "<br>"&
+                "Total Amount: $" & VarExpense.Total & "<br>" &
+                "Status: Approved" & "<br>" & 
+                "Notes: " & Txt_Notes_ExpenseDetail.Text 
+                & "<br><br><br>" &
+                "Expense Items:" & "<br>" &
+                Concat(
+                    Filter(
+                        'Expense Report Details',
+                        'Associated Event' = VarExpense.Event
+                    ),
+                    "---------------------------------------------------------------------------------<br><br>" &
+                    "Expense Name: " & Expense & 
+                    "<br>Amount: $" & Amount &
+                    "<br>Transaction Date: " & Text('Transaction Date', DateTimeFormat.ShortDate) &
+                    "<br>Category: " & Category &
+                    "<br>Vendor: " & Vendor &
+                    "<br>Project: " & Project &
+                    "<br>Expense Type: " & Billiable &
+                    "<br>Description: " & 'Expense Description' &
+                    "<br><br>"
+                )
+            );
+            
+            Navigate(AllExpense_Screen);
+        RadiusBottomLeft: =50
+        RadiusBottomRight: =50
+        RadiusTopLeft: =50
+        RadiusTopRight: =50
+        Size: =24
+        Text: ="Approved"
+        Width: =256
+        X: =348
+        Y: =1052
+        ZIndex: =12
+
